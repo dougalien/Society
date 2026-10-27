@@ -1,0 +1,820 @@
+<title>The Perfect Society</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one narrow reading column, like a charter being drafted; setup, then one question per screen, then the analysis. */
+:root {
+  --bg: #eef0ec;
+  --paper: #fbfbf8;
+  --ink: #1b2230;
+  --muted: #5b6370;
+  --rule: #d3d7d0;
+  --accent: #1d5f5a;
+  --accent-soft: #d8e8e5;
+  --seal: #9a3b2c;
+  --bar: #9fb9b5;
+  --on-accent: #ffffff;
+  --display: "Libre Caslon Text", "Iowan Old Style", Georgia, serif;
+  --body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11161b; --paper: #182027; --ink: #e5e8e6; --muted: #9aa3ab; --rule: #2c3741;
+    --accent: #6cbcb3; --accent-soft: #1f3a3a; --seal: #e08a72; --bar: #3d6763; --on-accent: #0d1a19;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11161b; --paper: #182027; --ink: #e5e8e6; --muted: #9aa3ab; --rule: #2c3741;
+  --accent: #6cbcb3; --accent-soft: #1f3a3a; --seal: #e08a72; --bar: #3d6763; --on-accent: #0d1a19;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 17px/1.55 var(--body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+}
+main { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; text-wrap: balance; margin: 0; line-height: 1.2; }
+h1 { font-size: clamp(2.1rem, 6vw, 3rem); }
+h2 { font-size: 1.6rem; }
+h3 { font-size: 1.25rem; }
+p { margin: 0; }
+.eyebrow { font: 500 0.75rem/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+.muted { color: var(--muted); }
+.stack { display: flex; flex-direction: column; gap: 12px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.sheet { background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 24px; }
+header.mast { display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--rule); padding-bottom: 20px; }
+header.mast p { max-width: 60ch; color: var(--muted); }
+
+button { font: inherit; cursor: pointer; }
+.btn { border: 1px solid var(--accent); background: var(--accent); color: var(--on-accent); padding: 10px 20px; border-radius: 4px; font-weight: 700; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.chip { border: 1px solid var(--rule); background: var(--paper); color: var(--ink); padding: 6px 12px; border-radius: 999px; font-size: 0.9rem; }
+.chip[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.link { background: none; border: none; color: var(--accent); text-decoration: underline; padding: 0; font-size: 0.95rem; }
+:focus-visible { outline: 3px solid var(--seal); outline-offset: 2px; }
+
+/* Setup */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.thinker { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; align-items: start; padding: 12px; border: 1px solid var(--rule); border-radius: 4px; background: var(--paper); cursor: pointer; }
+.thinker:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.thinker input { margin-top: 5px; accent-color: var(--accent); width: 16px; height: 16px; }
+.thinker strong { font-family: var(--display); font-weight: 400; font-size: 1.05rem; }
+.thinker .lived { grid-column: 2; font: 0.75rem/1.3 var(--mono); color: var(--muted); }
+.thinker .idea { grid-column: 2; font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
+.sharebox { display: flex; gap: 8px; flex-wrap: wrap; }
+.sharebox input { flex: 1 1 260px; min-width: 0; font: 0.85rem var(--mono); padding: 8px; border: 1px solid var(--rule); border-radius: 4px; background: var(--bg); color: var(--ink); }
+
+/* Quiz */
+.progress { height: 4px; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.progress div { height: 100%; background: var(--accent); transition: width 0.3s; }
+.qhead { display: flex; justify-content: space-between; gap: 12px; font: 0.8rem var(--mono); color: var(--muted); }
+.question { font-size: clamp(1.4rem, 4vw, 1.9rem); }
+.answers { display: flex; flex-direction: column; gap: 10px; }
+.answer { text-align: left; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); padding: 14px 16px; border-radius: 4px; display: grid; grid-template-columns: 1.6rem 1fr; gap: 10px; line-height: 1.4; }
+.answer .letter { font: 500 0.85rem/1.6 var(--mono); color: var(--muted); }
+.answer:hover { border-color: var(--accent); }
+.answer[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.answer[aria-pressed="true"] .letter { color: var(--accent); }
+.matters { display: flex; gap: 8px; align-items: center; font-size: 0.95rem; color: var(--muted); }
+.matters input { accent-color: var(--seal); width: 18px; height: 18px; }
+.nav { display: flex; justify-content: space-between; gap: 10px; }
+
+/* Results */
+.verdict { display: flex; flex-direction: column; gap: 8px; }
+.verdict .big { font-family: var(--display); font-size: clamp(2.2rem, 7vw, 3.4rem); line-height: 1.05; }
+.verdict .big em { color: var(--accent); font-style: italic; }
+.bars { display: flex; flex-direction: column; gap: 6px; }
+.bar { display: grid; grid-template-columns: minmax(7rem, 12rem) 1fr 3.2rem; gap: 10px; align-items: center; font-size: 0.92rem; }
+.bar .track { height: 14px; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.bar .fill { height: 100%; background: var(--bar); }
+.bar.top .fill { background: var(--accent); }
+.bar.top .name { font-weight: 700; }
+.bar .pct { font: 0.9rem var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
+.match { display: flex; flex-direction: column; gap: 12px; padding-block: 20px; border-top: 1px solid var(--rule); }
+.match:first-of-type { border-top: none; padding-top: 0; }
+.match .head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.match .head .pct { font: 500 1.1rem var(--mono); color: var(--accent); }
+blockquote { margin: 0; padding-left: 14px; border-left: 2px solid var(--seal); font-family: var(--display); font-style: italic; color: var(--ink); }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.pair > div { min-width: 0; }
+.pair h4 { margin: 0 0 6px; font: 500 0.75rem var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.pair ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; font-size: 0.92rem; }
+.charter { display: flex; flex-direction: column; gap: 14px; }
+.article { display: grid; grid-template-columns: 6.5rem 1fr; gap: 12px; }
+.article .num { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--seal); }
+.article ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-family: var(--display); }
+.article .star { color: var(--seal); font-family: var(--body); font-size: 0.8rem; }
+ol.discuss { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 10px; }
+.toast { font-size: 0.9rem; color: var(--accent); }
+a { color: var(--accent); }
+.src { display: block; margin-top: 2px; font-size: 0.8rem; line-height: 1.35; color: var(--muted); }
+.src a { color: var(--muted); text-decoration-color: var(--rule); }
+.src a:hover { color: var(--accent); }
+blockquote .src { font-family: var(--body); font-style: normal; }
+.reading { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 0.92rem; }
+.reading .note { color: var(--muted); font-size: 0.82rem; }
+.key-q { display: flex; flex-direction: column; gap: 10px; padding-block: 18px; border-top: 1px solid var(--rule); }
+.key-q:first-of-type { border-top: none; padding-top: 0; }
+.key-a { display: flex; flex-direction: column; gap: 4px; }
+.key-a > strong { font-weight: 700; }
+.key-a ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; font-size: 0.9rem; }
+.key-a .tag { font: 0.72rem var(--mono); color: var(--seal); }
+/* Timeline */
+.chartwrap { overflow-x: auto; }
+.tl { display: flex; flex-direction: column; gap: 0; border-left: 2px solid var(--rule); margin-left: 6px; }
+.tl-item { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 4px 0 26px 22px; }
+.tl-item::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+.tl-item.off::before { background: var(--rule); }
+.tl-item.off { opacity: 0.7; }
+.tl-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.tl-head .pct { font: 500 0.85rem var(--mono); color: var(--accent); }
+.tl-item .lived { font: 0.8rem var(--mono); color: var(--muted); }
+.tl-item h4 { margin: 4px 0 0; font: 500 0.72rem var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--seal); }
+.events { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.events li { display: grid; grid-template-columns: 7.5rem 1fr; gap: 10px; font-size: 0.93rem; }
+.events .when { font: 0.8rem/1.7 var(--mono); color: var(--muted); }
+.conn { font-size: 0.93rem; color: var(--muted); }
+.conn strong { color: var(--ink); }
+/* Lessons */
+.lesson-card { display: flex; flex-direction: column; gap: 10px; }
+.lesson-card .vs { font: 500 0.8rem var(--mono); color: var(--seal); letter-spacing: 0.06em; text-transform: uppercase; }
+.steps { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; font: 0.78rem var(--mono); }
+.steps li { padding: 4px 10px; border-radius: 999px; border: 1px solid var(--rule); color: var(--muted); }
+.steps li.on { border-color: var(--accent); background: var(--accent-soft); color: var(--ink); }
+.steps li.done { color: var(--accent); }
+.feedback { font-size: 0.95rem; padding: 10px 14px; border-left: 3px solid var(--accent); background: var(--accent-soft); border-radius: 0 4px 4px 0; }
+.lq { display: flex; flex-direction: column; gap: 10px; padding-block: 18px; border-top: 1px solid var(--rule); }
+.lq:first-child { border-top: none; padding-top: 0; }
+.lq h3 { font-size: 1.15rem; }
+.ctx { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px 12px; align-items: center; }
+.ctx .cell { background: var(--bg); border: 1px solid var(--rule); border-radius: 4px; padding: 10px 12px; font-size: 0.92rem; }
+.ctx .arrow { color: var(--seal); font-family: var(--mono); }
+.ctx .lab { font: 500 0.7rem var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.excerpt { display: flex; flex-direction: column; gap: 6px; }
+.excerpt .who { font: 500 0.72rem var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+textarea.claim { width: 100%; min-height: 180px; font: 1rem/1.5 var(--body); padding: 12px; border: 1px solid var(--rule); border-radius: 4px; background: var(--paper); color: var(--ink); }
+@media (max-width: 560px) {
+  .ctx { grid-template-columns: 1fr; }
+  .ctx .arrow { transform: rotate(90deg); justify-self: start; }
+  .events li { grid-template-columns: 1fr; gap: 0; }
+  .sheet { padding: 18px; }
+  .pair { grid-template-columns: 1fr; }
+  .bar { grid-template-columns: 6.5rem 1fr 3rem; font-size: 0.85rem; }
+  .article { grid-template-columns: 1fr; gap: 4px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<main id="app"></main>
+
+<script>
+const DATA = __DATA__;
+const ARTIFACT_URL = "__URL__";
+// Hosts that can't use #links (Streamlit) pass the starting link in START_HASH and a base ending in "?go=".
+const startHash = () => location.hash || window.START_HASH || "";
+const T = Object.fromEntries(DATA.thinkers.map(t => [t.id, t]));
+const BY_CODE = Object.fromEntries(DATA.thinkers.map(t => [t.code, t.id]));
+const LETTERS = "ABCDEF";
+const PRESETS = [
+  ["All thinkers", DATA.thinkers.map(t => t.id)],
+  ["The social contract", ["hobbes", "locke", "rousseau"]],
+  ["Ancient and classical", ["confucius", "plato", "aristotle", "ibnkhaldun", "machiavelli"]],
+  ["Enlightenment and revolution", ["locke", "montesquieu", "rousseau", "burke", "paine", "wollstonecraft"]],
+  ["Rights and equality", ["wollstonecraft", "mill", "douglass", "gandhi", "beauvoir", "king"]],
+  ["Modern justice", ["marx", "arendt", "rawls", "nozick", "king"]],
+];
+const SAVE_KEY = "perfect-society-v1";
+const LESSONS = Object.fromEntries(DATA.lessons.map(l => [l.id, l]));
+
+let state = load() || fresh();
+const fromHash = parseHash();
+if (fromHash && !(state.locked && state.selected.join() === fromHash.join())) { state = fresh(); state.selected = fromHash; state.locked = true; }
+const lessonFromHash = parseLessonHash();
+if (lessonFromHash) { state.lessonId = lessonFromHash; state.screen = "lesson"; }
+else if (state.screen === "lesson") state.screen = "lessons";
+
+function fresh() {
+  return { screen: "setup", selected: DATA.thinkers.map(t => t.id), answers: DATA.questions.map(() => null), weights: DATA.questions.map(() => false), i: 0, locked: false };
+}
+function load() {
+  try { const s = JSON.parse(localStorage.getItem(SAVE_KEY)); if (s && s.answers && s.answers.length === DATA.questions.length) return s; } catch (e) {}
+  return window.claude?.hot?.data?.state || null;
+}
+function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch (e) {} }
+window.claude?.hot?.snapshot?.(() => ({ state }));
+
+function parseHash() {
+  const h = startHash().replace(/^#/, "");
+  if (!h.startsWith("set-")) return null;
+  const ids = h.slice(4).split("-").map(c => BY_CODE[c]).filter(Boolean);
+  return ids.length >= 2 ? ids : null;
+}
+function parseLessonHash() {
+  const h = decodeURIComponent(startHash().replace(/^#/, ""));
+  return h.startsWith("lesson-") && LESSONS[h.slice(7)] ? h.slice(7) : null;
+}
+const linkTo = h => ARTIFACT_URL.endsWith("?go=") ? ARTIFACT_URL + h : (ARTIFACT_URL.startsWith("http") ? ARTIFACT_URL : location.href.split("#")[0]) + "#" + h;
+function setHash() { return "set-" + DATA.thinkers.filter(t => state.selected.includes(t.id)).map(t => t.code).join("-"); }
+function shareLink() { return linkTo(setHash()); }
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const app = document.getElementById("app");
+function go(screen) { state.screen = screen; save(); syncLessonHash(); render(); window.scrollTo(0, 0); }
+// Keep the address bar on #lesson-<id> while a lesson is open, so a reload stays in the lesson.
+function syncLessonHash() {
+  try {
+    const want = state.screen === "lesson" ? "#lesson-" + state.lessonId : "";
+    const isLesson = /^#lesson-/.test(location.hash);
+    if (want && location.hash !== want) history.replaceState(null, "", want);
+    else if (!want && isLesson) history.replaceState(null, "", location.pathname + location.search);
+  } catch (e) {}
+}
+
+function render() {
+  if (state.screen === "quiz") return renderQuiz();
+  if (state.screen === "results") return renderResults();
+  if (state.screen === "timeline") return renderTimeline();
+  if (state.screen === "sources") return renderSources();
+  if (state.screen === "lessons") return renderLessons();
+  if (state.screen === "lesson" && LESSONS[state.lessonId]) return renderLesson();
+  renderSetup();
+}
+// The timeline and the sources page can open from anywhere, so remember the way back.
+function openPage(screen) { state.back = [...(state.back || []), state.screen].filter(x => x !== screen).slice(-4); go(screen); }
+const openTimeline = () => openPage("timeline");
+const openSources = () => openPage("sources");
+const prevScreen = () => (state.back || []).slice(-1)[0] || "setup";
+const backLabel = () => ({ results: "Back to my results", quiz: "Back to the questions", timeline: "Back to the timeline", lesson: "Back to the lesson", lessons: "Back to lessons" }[prevScreen()] || "Back");
+const goBack = () => { const to = prevScreen(); state.back = (state.back || []).slice(0, -1); go(to); };
+
+/* ---------- Sources ----------
+   Every thinker position links to the passage it comes from (see sources.py). Where no single passage
+   was pinned down, the link goes to the thinker's main work instead. */
+const W = DATA.works;
+const ext = (url, text) => `<a href="${esc(url)}" target="_blank" rel="noopener">${text}</a>`;
+function cite(id, i, lead = "Source") {
+  const c = T[id].cites[i];
+  if (!c) return "";
+  const w = W[c.work];
+  return c.general
+    ? `<span class="src">Read more: ${ext(c.url, `<i>${esc(w.title)}</i>`)} (${esc(w.year)})</span>`
+    : `<span class="src">${lead}: ${ext(c.url, `<i>${esc(w.title)}</i>, ${esc(c.loc)}`)}</span>`;
+}
+function quoteCite(t) {
+  const c = t.quoteSrc; if (!c) return "";
+  const w = W[c.work];
+  return `<span class="src">${ext(c.url, `${esc(short(t.id))}, <i>${esc(w.title)}</i>${c.loc ? `, ${esc(c.loc)}` : ""}`)} (${esc(w.year)})</span>`;
+}
+const readingList = t => `<ul class="reading">${t.read.map(k => `<li>${ext(W[k].url, `<i>${esc(W[k].title)}</i>`)} (${esc(W[k].year)}) <span class="note">${esc(W[k].note)}.</span></li>`).join("")}</ul>`;
+const citeText = (id, i) => { const c = T[id].cites[i]; if (!c) return ""; const w = W[c.work]; return `${w.title}${c.general ? "" : ", " + c.loc} ${c.url}`; };
+const finished = () => state.answers.every(a => a !== null);
+
+/* ---------- History machine ----------
+   Lifespans on one axis with a break: 600–300 BCE gets the left 22%, 1300–2025 CE the rest,
+   since no thinker here lived in between. */
+const AX = { left: 170, width: 570, a0: -600, a1: -300, b0: 1300, b1: 2025, aw: 0.22, gap: 0.04 };
+function xOf(y) {
+  const { left, width, a0, a1, b0, b1, aw, gap } = AX;
+  if (y <= a1) return left + ((y - a0) / (a1 - a0)) * aw * width;
+  return left + (aw + gap) * width + ((y - b0) / (b1 - b0)) * (1 - aw - gap) * width;
+}
+const yearLabel = y => y < 0 ? `${-y} BCE` : `${y}`;
+function lifespanChart(pcts) {
+  const rowH = 22, top = 34, list = DATA.thinkers, h = top + list.length * rowH + 8;
+  const sel = new Set(state.selected);
+  const ranked = pcts ? Object.entries(pcts).sort((a, b) => b[1] - a[1]).slice(0, 3).map(e => e[0]) : [];
+  const ticks = [-550, -350, 1400, 1500, 1600, 1700, 1800, 1900, 2000];
+  const bx = xOf(AX.a1) + (AX.gap * AX.width) / 2;
+  let s = `<svg viewBox="0 0 760 ${h}" role="img" aria-label="Lifespans of the thinkers on a timeline" style="width:100%;min-width:620px;display:block">`;
+  ticks.forEach(t => {
+    const x = xOf(t);
+    s += `<line x1="${x}" x2="${x}" y1="${top - 6}" y2="${h - 6}" stroke="var(--rule)" stroke-width="1"/>`;
+    s += `<text x="${x}" y="${top - 12}" text-anchor="middle" font-size="11" font-family="IBM Plex Mono, monospace" fill="var(--muted)">${yearLabel(t)}</text>`;
+  });
+  s += `<text x="${bx}" y="${top - 12}" text-anchor="middle" font-size="12" fill="var(--muted)">//</text>`;
+  s += `<line x1="${bx}" x2="${bx}" y1="${top - 6}" y2="${h - 6}" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 3"/>`;
+  list.forEach((t, k) => {
+    const y = top + k * rowH, x1 = xOf(t.born), x2 = xOf(t.died), on = sel.has(t.id);
+    const isTop = ranked.includes(t.id), pct = pcts && pcts[t.id] != null ? ` ${pcts[t.id]}%` : "";
+    const fill = isTop ? "var(--accent)" : on ? "var(--bar)" : "var(--rule)";
+    s += `<g opacity="${on ? 1 : 0.55}">`;
+    s += `<text x="${AX.left - 10}" y="${y + 13}" text-anchor="end" font-size="12.5" fill="var(--ink)" font-weight="${isTop ? 700 : 400}">${esc(t.name)}</text>`;
+    s += `<rect x="${x1}" y="${y + 3}" width="${Math.max(3, x2 - x1)}" height="13" rx="2" fill="${fill}"/>`;
+    if (pct) s += `<text x="${x2 + 6}" y="${y + 13}" font-size="11" font-family="IBM Plex Mono, monospace" fill="${isTop ? "var(--accent)" : "var(--muted)"}">${pct.trim()}</text>`;
+    s += `</g>`;
+  });
+  return s + `</svg>`;
+}
+
+function renderTimeline() {
+  const pcts = finished() ? Object.fromEntries(score().map(r => [r.id, r.pct])) : null;
+  const sel = new Set(state.selected);
+  app.innerHTML = `
+    <header class="mast">
+      <span class="eyebrow">The history machine</span>
+      <h1>Through history</h1>
+      <p>Every thinker answered the problems of their own time. See when each one lived, what was happening around them, and who they were arguing with.</p>
+    </header>
+    <div class="row"><button class="btn ghost" id="tl-back">${backLabel()}</button><button class="link" id="tl-sources">Answer key and sources</button></div>
+    <section class="sheet stack">
+      <h2>When they lived</h2>
+      <div class="chartwrap">${lifespanChart(pcts)}</div>
+      <p class="muted" style="font-size:0.85rem">The gap between 300 BCE and 1300 CE is cut out to save space.${pcts ? " Your top three matches are highlighted, with your percentages." : ""} Faded names aren't in this round.</p>
+    </section>
+    ${DATA.eras.map(era => `
+      <section class="stack era">
+        <div class="stack" style="gap:4px"><h2>${esc(era.name)}</h2><p class="muted">${esc(era.blurb)}</p></div>
+        <div class="tl">
+          ${DATA.thinkers.filter(t => t.era === era.id).map(t => `
+            <article class="tl-item ${sel.has(t.id) ? "" : "off"}" id="tl-${t.id}">
+              <div class="tl-head"><h3>${esc(t.name)}</h3>${pcts && pcts[t.id] != null ? `<span class="pct">${pcts[t.id]}% of your society</span>` : ""}</div>
+              <span class="lived">${esc(t.lived)} · ${esc(t.where)}</span>
+              <p>${esc(t.idea)}</p>
+              <h4>The world around them</h4>
+              <ul class="events">${t.world.map(w => `<li><span class="when">${esc(w.when)}</span><span>${esc(w.what)}</span></li>`).join("")}</ul>
+              <p class="conn"><strong>Connections:</strong> ${esc(t.link)}</p>
+              <h4>Read their own words</h4>
+              ${readingList(t)}
+              <span class="src">Facts checked against: ${t.life.map(l => ext(l.url, esc(l.label))).join(", ")}</span>
+            </article>`).join("")}
+        </div>
+      </section>`).join("")}
+    <div class="row"><button class="btn ghost" id="tl-back2">${backLabel()}</button></div>`;
+  document.getElementById("tl-back").onclick = goBack;
+  document.getElementById("tl-sources").onclick = openSources;
+  document.getElementById("tl-back2").onclick = goBack;
+}
+
+/* ---------- Setup ---------- */
+function renderSetup() {
+  const sel = new Set(state.selected);
+  const enough = sel.size >= 2;
+  app.innerHTML = `
+    <header class="mast">
+      <span class="eyebrow">A history machine for political philosophy</span>
+      <h1>The Perfect Society</h1>
+      <p>Answer ${DATA.questions.length} questions about how people should live together. Then press <strong>Analysis</strong> to see which of history's great thinkers would recognize your society as their own.</p>
+    </header>
+    <section class="stack">
+      <h2>Choose your thinkers</h2>
+      ${state.locked ? `<p class="muted">Your teacher picked these ${sel.size} thinkers for this round. <button class="link" id="unlock">Choose your own instead</button></p>` : `<p class="muted">Your results are split among the thinkers you pick. Choose at least two.</p>`}
+      ${state.locked ? "" : `<div class="row" role="group" aria-label="Quick picks">
+        ${PRESETS.map(([name, ids], k) => `<button class="chip" data-preset="${k}" aria-pressed="${ids.length === sel.size && ids.every(id => sel.has(id))}">${esc(name)}</button>`).join("")}
+        <button class="chip" data-preset="none" aria-pressed="false">Clear</button>
+      </div>`}
+      <div class="grid">
+        ${DATA.thinkers.filter(t => !state.locked || sel.has(t.id)).map(t => `
+          <label class="thinker" for="t-${t.id}">
+            <input type="checkbox" id="t-${t.id}" data-id="${t.id}" ${sel.has(t.id) ? "checked" : ""} ${state.locked ? "disabled" : ""}>
+            <strong>${esc(t.name)}</strong>
+            <span class="lived">${esc(t.lived)} · ${esc(t.where)}</span>
+            <span class="idea">${esc(t.idea)}</span>
+          </label>`).join("")}
+      </div>
+    </section>
+    ${state.locked ? "" : `<section class="sheet stack">
+      <h3>For teachers: share this set with your class</h3>
+      <p class="muted">Students who open this link start with exactly these thinkers.</p>
+      <div class="sharebox">
+        <input id="share-link" readonly value="${esc(shareLink())}" aria-label="Class link">
+        <button class="btn ghost" id="copy-link" ${enough ? "" : "disabled"}>Copy link</button>
+      </div>
+      <span class="toast" id="copy-toast" aria-live="polite"></span>
+    </section>`}
+    <div class="row">
+      <button class="btn" id="start" ${enough ? "" : "disabled"}>${state.answers.some(a => a !== null) ? "Continue" : "Start"} with ${sel.size} thinkers</button>
+      <button class="btn ghost" id="to-timeline">Explore the timeline</button>
+      <button class="btn ghost" id="to-lessons">Lessons</button>
+      <button class="link" id="to-sources">Answer key and sources</button>
+      ${state.answers.some(a => a !== null) ? `<button class="link" id="restart">Start over with blank answers</button>` : ""}
+    </div>`;
+  document.getElementById("to-timeline").onclick = openTimeline;
+  document.getElementById("to-sources").onclick = openSources;
+  document.getElementById("to-lessons").onclick = () => go("lessons");
+  app.querySelectorAll("input[data-id]").forEach(cb => cb.onchange = () => {
+    state.selected = DATA.thinkers.map(t => t.id).filter(id => id === cb.dataset.id ? cb.checked : state.selected.includes(id));
+    save(); renderSetup();
+  });
+  app.querySelectorAll("[data-preset]").forEach(b => b.onclick = () => {
+    state.selected = b.dataset.preset === "none" ? [] : PRESETS[+b.dataset.preset][1].slice();
+    save(); renderSetup();
+  });
+  const unlock = document.getElementById("unlock");
+  if (unlock) unlock.onclick = () => { state.locked = false; save(); renderSetup(); };
+  const copy = document.getElementById("copy-link");
+  if (copy) copy.onclick = () => copyText(shareLink(), document.getElementById("share-link"), "copy-toast", "Link copied. Paste it into your class page.");
+  document.getElementById("start").onclick = () => { state.i = Math.max(0, state.answers.findIndex(a => a === null)); if (state.i < 0) state.i = 0; go("quiz"); };
+  const restart = document.getElementById("restart");
+  if (restart) restart.onclick = () => { state.answers = state.answers.map(() => null); state.weights = state.weights.map(() => false); save(); renderSetup(); };
+}
+
+function copyText(text, field, toastId, msg) {
+  const toast = document.getElementById(toastId);
+  const fallback = () => { if (field) { field.hidden = false; field.focus(); field.select(); } toast.textContent = "Press Ctrl+C (or Cmd+C) to copy the selected text."; };
+  try {
+    navigator.clipboard.writeText(text).then(() => { toast.textContent = msg; }, fallback);
+  } catch (e) { fallback(); }
+}
+
+/* ---------- Quiz ---------- */
+function renderQuiz() {
+  const n = DATA.questions.length, i = state.i, q = DATA.questions[i], picked = state.answers[i];
+  const done = state.answers.filter(a => a !== null).length;
+  app.innerHTML = `
+    <div class="stack">
+      <div class="qhead"><span>Question ${i + 1} of ${n}</span><span>${esc(q.area)}</span></div>
+      <div class="progress" aria-hidden="true"><div style="width:${(done / n) * 100}%"></div></div>
+    </div>
+    <h2 class="question">${esc(q.q)}</h2>
+    <div class="answers" role="group" aria-label="Answers">
+      ${q.answers.map((a, k) => `<button class="answer" data-k="${k}" aria-pressed="${picked === k}"><span class="letter">${LETTERS[k]}</span><span>${esc(a.text)}</span></button>`).join("")}
+    </div>
+    <label class="matters" for="matters"><input type="checkbox" id="matters" ${state.weights[i] ? "checked" : ""}> This one matters a lot to me (counts double)</label>
+    <div class="nav">
+      <button class="btn ghost" id="back">${i === 0 ? "Thinkers" : "Back"}</button>
+      ${i < n - 1
+        ? `<button class="btn" id="next" ${picked === null ? "disabled" : ""}>Next</button>`
+        : `<button class="btn" id="analyze" ${done < n ? "disabled" : ""}>Analysis</button>`}
+    </div>
+    ${i === n - 1 && done < n ? `<p class="muted">Answer every question to unlock the analysis. <button class="link" id="jump">Go to the first one you skipped</button></p>` : ""}`;
+  app.querySelectorAll(".answer").forEach(b => b.onclick = () => {
+    state.answers[i] = +b.dataset.k; save();
+    if (i < n - 1) setTimeout(() => { state.i = i + 1; save(); renderQuiz(); }, 180);
+    renderQuiz();
+  });
+  document.getElementById("matters").onchange = e => { state.weights[i] = e.target.checked; save(); };
+  document.getElementById("back").onclick = () => { if (i === 0) go("setup"); else { state.i = i - 1; save(); renderQuiz(); } };
+  const next = document.getElementById("next");
+  if (next) next.onclick = () => { state.i = i + 1; save(); renderQuiz(); };
+  const an = document.getElementById("analyze");
+  if (an) an.onclick = () => go("results");
+  const jump = document.getElementById("jump");
+  if (jump) jump.onclick = () => { state.i = state.answers.findIndex(a => a === null); save(); renderQuiz(); };
+}
+
+/* ---------- Scoring ----------
+   Each thinker earns 2 points for an answer that is their clear position and 1 for a partial match,
+   doubled on questions the student marked as important. A thinker's agreement is the share of the
+   points they could have earned, so thinkers who appear in fewer answers are not buried.
+   The percentages split 100% among the chosen thinkers, weighted toward stronger agreement. */
+function pts(a, id) { return a.strong.includes(id) ? 2 : a.partial.includes(id) ? 1 : 0; }
+function score() {
+  const rows = state.selected.map(id => {
+    let earned = 0, max = 0;
+    DATA.questions.forEach((q, i) => {
+      const w = state.weights[i] ? 2 : 1;
+      const best = Math.max(...q.answers.map(a => pts(a, id)));
+      if (!best) return;
+      max += best * w;
+      if (state.answers[i] !== null) earned += pts(q.answers[state.answers[i]], id) * w;
+    });
+    return { id, agree: max ? earned / max : 0 };
+  });
+  const total = rows.reduce((s, r) => s + r.agree ** 3, 0);
+  rows.forEach(r => r.share = total ? (r.agree ** 3) / total * 100 : 100 / rows.length);
+  rows.sort((a, b) => b.share - a.share);
+  roundTo100(rows);
+  return rows;
+}
+function roundTo100(rows) {
+  rows.forEach(r => r.pct = Math.floor(r.share));
+  let left = 100 - rows.reduce((s, r) => s + r.pct, 0);
+  [...rows].sort((a, b) => (b.share % 1) - (a.share % 1)).slice(0, left).forEach(r => r.pct++);
+}
+function agreements(id) {
+  const out = [];
+  DATA.questions.forEach((q, i) => { const a = q.answers[state.answers[i]]; const p = pts(a, id); if (p) out.push({ i, p, mine: a.text }); });
+  return out.sort((x, y) => y.p - x.p || state.weights[y.i] - state.weights[x.i]);
+}
+function disagreements(id) {
+  const out = [];
+  DATA.questions.forEach((q, i) => {
+    const mine = q.answers[state.answers[i]];
+    const theirs = q.answers.find(a => a.strong.includes(id));
+    if (theirs && !pts(mine, id)) out.push({ i, mine: mine.text, theirs: theirs.text });
+  });
+  return out.sort((x, y) => state.weights[y.i] - state.weights[x.i]);
+}
+const last = name => name.replace(/ Jr\.$/, "").split(" ").slice(-1)[0];
+const short = id => ({ king: "King", ibnkhaldun: "Ibn Khaldun", confucius: "Confucius", plato: "Plato", aristotle: "Aristotle", montesquieu: "Montesquieu" }[id] || last(T[id].name));
+
+/* ---------- Results ---------- */
+function renderResults() {
+  const rows = score(), top = rows.slice(0, Math.min(3, rows.length)), bottom = rows[rows.length - 1];
+  const lead = T[rows[0].id];
+  const dis0 = disagreements(lead.id)[0];
+  const discuss = [
+    lead.challenge,
+    `Your society is furthest from ${T[bottom.id].name}'s. Write ${short(bottom.id)}'s strongest objection to your society. How would you answer it?`,
+    dis0 ? `You and ${short(lead.id)} split on "${DATA.questions[dis0.i].q}" Who is right, and why?` : `You agreed with ${short(lead.id)} on every question where they took a clear side. Is there anything about their society you would still change?`,
+    `Find a classmate whose top match was different from yours. Could your two societies exist side by side? What would they fight about?`,
+    `Which one answer would you change now, and how would that change your society?`,
+  ];
+  const areas = [];
+  DATA.questions.forEach((q, i) => { let g = areas.find(a => a.area === q.area); if (!g) areas.push(g = { area: q.area, items: [] }); g.items.push(i); });
+
+  app.innerHTML = `
+    <header class="mast verdict">
+      <span class="eyebrow">Analysis</span>
+      <p class="big">Your society is <em>${rows[0].pct}% ${esc(short(lead.id))}</em></p>
+      <p class="muted">${esc(lead.name)} (${esc(lead.lived)}): ${esc(lead.idea)}</p>
+    </header>
+
+    <section class="sheet stack">
+      <h2>Your mix of thinkers</h2>
+      <div class="bars">
+        ${rows.map((r, k) => `<div class="bar ${k === 0 ? "top" : ""}"><span class="name">${esc(T[r.id].name)}</span><span class="track"><span class="fill" style="display:block;width:${(r.share / rows[0].share) * 100}%"></span></span><span class="pct">${r.pct}%</span></div>`).join("")}
+      </div>
+      <p class="muted" style="font-size:0.85rem">Percentages are split among the ${rows.length} thinkers you chose. Questions you marked as important count double.</p>
+    </section>
+
+    <section class="stack">
+      <h2>Your closest matches</h2>
+      <div class="sheet">
+        ${top.map(r => {
+          const t = T[r.id], ag = agreements(r.id).slice(0, 3), di = disagreements(r.id).slice(0, 2);
+          return `<article class="match">
+            <div class="head"><h3>${esc(t.name)}</h3><span class="pct">${r.pct}%</span></div>
+            <span class="lived muted" style="font:0.8rem var(--mono)">${esc(t.lived)} · ${esc(t.where)}</span>
+            <p>${esc(t.rundown)}</p>
+            ${t.quote ? `<blockquote>"${esc(t.quote)}"${quoteCite(t)}</blockquote>` : ""}
+            <div class="pair">
+              <div><h4>Where you agree</h4><ul>${ag.length ? ag.map(x => `<li>${esc(x.mine)}${cite(r.id, x.i, x.p === 2 ? "Where " + short(r.id) + " says it" : "Closest passage")}</li>`).join("") : "<li>Not much. This match comes from a handful of partial overlaps.</li>"}</ul></div>
+              <div><h4>Where you part ways</h4><ul>${di.length ? di.map(x => `<li>You said "${esc(x.mine)}." ${esc(short(r.id))} would say "${esc(x.theirs)}."${cite(r.id, x.i, "Where " + short(r.id) + " says it")}</li>`).join("") : `<li>Nowhere that ${esc(short(r.id))} took a clear side.</li>`}</ul></div>
+            </div>
+            <div class="stack" style="gap:6px"><h4 style="margin:0;font:500 0.75rem var(--mono);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted)">Read ${esc(short(r.id))}'s own words</h4>${readingList(t)}</div>
+          </article>`;
+        }).join("")}
+        <p class="muted" style="font-size:0.85rem;margin-top:12px">Every link opens the thinker's own writing in a new tab. See the <button class="link" id="res-sources">answer key and sources</button> for where every thinker stands on every question.</p>
+      </div>
+    </section>
+
+    <section class="sheet stack">
+      <h2>Your society's charter</h2>
+      <p class="muted">These are the answers you chose, written as the founding principles of your society.</p>
+      <div class="charter">
+        ${areas.map((g, k) => `<div class="article"><span class="num">Article ${["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"][k]}<br>${esc(g.area)}</span><ul>${g.items.map(i => `<li>${esc(DATA.questions[i].answers[state.answers[i]].text)}.${state.weights[i] ? ` <span class="star">(matters most)</span>` : ""}</li>`).join("")}</ul></div>`).join("")}
+      </div>
+    </section>
+
+    <section class="sheet stack">
+      <h2>Your matches through history</h2>
+      <p class="muted">Your society borrows from thinkers who lived as much as ${Math.max(...top.map(r => T[r.id].died)) - Math.min(...top.map(r => T[r.id].born))} years apart.</p>
+      <div class="chartwrap">${lifespanChart(Object.fromEntries(rows.map(r => [r.id, r.pct])))}</div>
+      <div class="row"><button class="btn ghost" id="res-timeline">See what was happening in their world</button></div>
+    </section>
+
+    <section class="stack">
+      <h2>Discussion</h2>
+      <ol class="discuss">${discuss.map(d => `<li>${esc(d)}</li>`).join("")}</ol>
+    </section>
+
+    <section class="stack">
+      <div class="row">
+        <button class="btn" id="copy-results">Copy my results</button>
+        <button class="btn ghost" id="review">Change my answers</button>
+        <button class="btn ghost" id="again">Play again</button>
+      </div>
+      <span class="toast" id="results-toast" aria-live="polite"></span>
+      <textarea id="results-text" readonly hidden rows="10" style="width:100%;font:0.85rem var(--mono);background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:4px;padding:8px"></textarea>
+    </section>`;
+
+  const text = [
+    `My perfect society (The Perfect Society game)`, ``,
+    ...rows.map(r => `${r.pct}%  ${T[r.id].name}`), ``,
+    `My charter:`, ...DATA.questions.map((q, i) => `${i + 1}. ${q.q} ${q.answers[state.answers[i]].text}${state.weights[i] ? " (matters most)" : ""}`), ``,
+    `Discussion:`, ...discuss.map((d, k) => `${k + 1}. ${d}`), ``,
+    `Sources for my top matches:`, ...top.flatMap(r => [`${T[r.id].name}:`, ...T[r.id].read.map(k => `  ${W[k].title} (${W[k].year}) ${W[k].url}`)]),
+  ].join("\n");
+  document.getElementById("copy-results").onclick = () => {
+    const ta = document.getElementById("results-text"); ta.value = text;
+    copyText(text, ta, "results-toast", "Copied. Paste your results into your assignment.");
+  };
+  document.getElementById("review").onclick = () => { state.i = 0; go("quiz"); };
+  document.getElementById("res-timeline").onclick = openTimeline;
+  document.getElementById("res-sources").onclick = openSources;
+  document.getElementById("again").onclick = () => { state.answers = state.answers.map(() => null); state.weights = state.weights.map(() => false); state.i = 0; go("setup"); };
+}
+
+/* ---------- Lessons ----------
+   Each lesson round follows one of the class worksheets (lessons.py): warm-up poll, a few questions,
+   a head-to-head result with the thinkers' context and primary sources, an optional "apply it", and a written claim. */
+const lessonLink = id => linkTo("lesson-" + id);
+const vs = l => l.pair.map(short).join(" vs. ");
+function lessonState(id) {
+  state.lessons = state.lessons || {};
+  return state.lessons[id] = state.lessons[id] || { step: 0, poll: null, answers: {}, apply: {}, claim: "" };
+}
+function renderLessons() {
+  app.innerHTML = `
+    <header class="mast">
+      <span class="eyebrow">Lessons</span>
+      <h1>Lesson rounds</h1>
+      <p>Each round goes with one of the class worksheets and takes 10 to 15 minutes. It doesn't change your main game.</p>
+    </header>
+    <div class="row"><button class="btn ghost" id="ls-back">Back to the start</button></div>
+    ${DATA.lessons.map(l => {
+      const ls = (state.lessons || {})[l.id];
+      return `<section class="sheet lesson-card">
+        <span class="eyebrow">Lesson ${esc(l.id)}</span>
+        <h2>${esc(l.title)}</h2>
+        <p class="muted">${esc(l.big)}</p>
+        <span class="vs">${esc(vs(l))}</span>
+        <div class="row">
+          <button class="btn" data-open="${esc(l.id)}">${ls && (ls.poll !== null || ls.step) ? "Continue" : "Start"} lesson</button>
+          <button class="link" data-copy="${esc(l.id)}">Copy class link</button>
+        </div>
+        <input readonly hidden value="${esc(lessonLink(l.id))}" id="ll-${esc(l.id.replace(".", "-"))}" style="font:0.85rem var(--mono);padding:8px;border:1px solid var(--rule);border-radius:4px;background:var(--bg);color:var(--ink)">
+        <span class="toast" id="lt-${esc(l.id.replace(".", "-"))}" aria-live="polite"></span>
+      </section>`;
+    }).join("")}`;
+  document.getElementById("ls-back").onclick = () => go("setup");
+  app.querySelectorAll("[data-open]").forEach(b => b.onclick = () => { state.lessonId = b.dataset.open; go("lesson"); });
+  app.querySelectorAll("[data-copy]").forEach(b => b.onclick = () => {
+    const k = b.dataset.copy.replace(".", "-");
+    copyText(lessonLink(b.dataset.copy), document.getElementById("ll-" + k), "lt-" + k, "Link copied. Students who open it go straight to this lesson.");
+  });
+}
+function lessonScore(l, ls) {
+  const rows = l.pair.map(id => {
+    let earned = 0, max = 0;
+    l.questions.forEach(i => {
+      const q = DATA.questions[i], best = Math.max(...q.answers.map(a => pts(a, id)));
+      max += best; if (ls.answers[i] != null) earned += pts(q.answers[ls.answers[i]], id);
+    });
+    return { id, agree: max ? earned / max : 0 };
+  });
+  const total = rows.reduce((s, r) => s + r.agree ** 3, 0);
+  rows.forEach(r => r.share = total ? (r.agree ** 3) / total * 100 : 50);
+  rows.sort((a, b) => b.share - a.share);
+  roundTo100(rows);
+  return rows;
+}
+const whoSays = who => who === "both" ? "This mixes both thinkers' ideas." : who ? `This lines up with ${T[who].name}.` : "";
+function renderLesson() {
+  const l = LESSONS[state.lessonId], ls = lessonState(l.id);
+  const steps = ["Warm-up", "Questions", "Results", ...(l.apply.length ? ["Apply it"] : []), "Take a side"];
+  const step = Math.min(ls.step, steps.length - 1), name = steps[step];
+  const allAnswered = l.questions.every(i => ls.answers[i] != null);
+  const canNext = name === "Warm-up" ? ls.poll !== null : name === "Questions" ? allAnswered : true;
+  let body = "";
+  if (name === "Warm-up") {
+    body = `<section class="stack">
+      <span class="eyebrow">What makes a good government?</span>
+      <h2 class="question">${esc(l.warmup.prompt)}</h2>
+      <div class="answers" role="group" aria-label="Answers">${l.warmup.options.map((o, k) => `<button class="answer" data-poll="${k}" aria-pressed="${ls.poll === k}"><span class="letter">${LETTERS[k]}</span><span>${esc(o.text)}</span></button>`).join("")}</div>
+      ${ls.poll !== null ? `<p class="feedback">${esc(whoSays(l.warmup.options[ls.poll].who))} There is no single correct answer. Be prepared to explain your reasoning.</p>` : ""}
+      <p class="muted"><strong>Think and write on your worksheet:</strong> ${esc(l.warmup.think)}</p>
+      ${l.pairNote ? `<p class="muted" style="font-size:0.9rem">${esc(l.pairNote)}</p>` : ""}
+    </section>`;
+  } else if (name === "Questions") {
+    body = `<section class="sheet">
+      <p class="muted" style="margin-bottom:14px">Answer for yourself. At the end you'll see whether your society looks more like ${esc(vs(l).replace(" vs. ", "'s or "))}'s.</p>
+      ${l.questions.map((i, n) => `<div class="lq">
+        <span class="eyebrow">${n + 1} of ${l.questions.length} · ${esc(DATA.questions[i].area)}</span>
+        <h3>${esc(DATA.questions[i].q)}</h3>
+        <div class="answers" role="group">${DATA.questions[i].answers.map((a, k) => `<button class="answer" data-q="${i}" data-k="${k}" aria-pressed="${ls.answers[i] === k}"><span class="letter">${LETTERS[k]}</span><span>${esc(a.text)}</span></button>`).join("")}</div>
+      </div>`).join("")}
+    </section>`;
+  } else if (name === "Results") {
+    const rows = lessonScore(l, ls), lead = rows[0];
+    body = `<header class="verdict">
+        <p class="big">Your society is <em>${lead.pct}% ${esc(short(lead.id))}</em></p>
+        <div class="bars">${rows.map((r, k) => `<div class="bar ${k === 0 ? "top" : ""}"><span class="name">${esc(T[r.id].name)}</span><span class="track"><span class="fill" style="display:block;width:${rows[0].share ? (r.share / rows[0].share) * 100 : 0}%"></span></span><span class="pct">${r.pct}%</span></div>`).join("")}</div>
+      </header>
+      <section class="sheet stack">
+        <h2>Where you agree with each</h2>
+        <div class="pair">${l.pair.map(id => {
+          const ag = l.questions.filter(i => pts(DATA.questions[i].answers[ls.answers[i]], id));
+          return `<div><h4>${esc(short(id))}</h4><ul>${ag.length ? ag.map(i => `<li>${esc(DATA.questions[i].answers[ls.answers[i]].text)}${cite(id, i, "Where " + short(id) + " says it")}</li>`).join("") : `<li>Nowhere in this round.</li>`}</ul></div>`;
+        }).join("")}</div>
+      </section>
+      <section class="sheet stack">
+        <h2>What they witnessed, what they believed</h2>
+        <p class="muted" style="font-size:0.9rem">Contextualization: what happened during each thinker's lifetime helps explain their ideas.</p>
+        ${l.pair.map(id => `<div class="stack" style="gap:6px"><h3>${esc(T[id].name)} <span class="muted" style="font:0.8rem var(--mono)">${esc(T[id].lived)}</span></h3>
+          <div class="ctx"><div class="cell"><span class="lab">What ${esc(short(id))} witnessed</span><br>${esc(l.context[id][0])}</div><span class="arrow" aria-hidden="true">→</span><div class="cell"><span class="lab">What ${esc(short(id))} believed</span><br>${esc(l.context[id][1])}</div></div></div>`).join("")}
+        <div class="row"><button class="btn ghost" id="ln-timeline">See their world in the timeline</button></div>
+      </section>
+      <section class="sheet stack">
+        <h2>Primary sources</h2>
+        <p class="muted" style="font-size:0.9rem">The excerpts from your worksheet. Each link opens the full passage in the original book, so you can read what comes before and after.</p>
+        ${l.excerpts.map(e => `<div class="excerpt"><span class="who">${esc(T[e.who].name)}</span><blockquote>"${esc(e.text)}"<span class="src">${e.adapted ? "Adapted from " : ""}${ext(e.url, esc(e.src))}${e.adapted ? ". The worksheet puts this in modern words; the link has the original." : ""}</span></blockquote></div>`).join("")}
+      </section>`;
+  } else if (name === "Apply it") {
+    body = l.apply.map((a, n) => `<section class="sheet stack">
+      <span class="eyebrow">Apply what you learned</span>
+      <h2>${esc(a.title)}</h2>
+      <p>${esc(a.scenario)}</p>
+      <div class="answers" role="group">${a.options.map((o, k) => `<button class="answer" data-ap="${n}" data-k="${k}" aria-pressed="${ls.apply[n] === k}"><span class="letter">${LETTERS[k]}</span><span>${esc(o.text)}</span></button>`).join("")}</div>
+      ${ls.apply[n] != null ? `<p class="feedback">${esc(a.options[ls.apply[n]].note)}</p>` : ""}
+    </section>`).join("") + `<p class="muted">Explain your reasoning on your worksheet.</p>`;
+  } else {
+    const rows = lessonScore(l, ls);
+    const ev = rows.map(r => ({ id: r.id, items: l.questions.filter(i => pts(DATA.questions[i].answers[ls.answers[i]], r.id) === 2) }));
+    body = `<section class="stack">
+      <span class="eyebrow">Take a side</span>
+      <h2>${esc(l.claim)}</h2>
+      <div class="sheet stack" style="gap:8px">
+        <h3 style="font-size:1.05rem">Evidence you could start from</h3>
+        ${ev.map(e => `<p style="font-size:0.92rem"><strong>${esc(short(e.id))}:</strong> ${e.items.length ? e.items.map(i => `you chose "${esc(DATA.questions[i].answers[ls.answers[i]].text)}"`).join("; ") : "you didn't pick any of their clear positions"}.</p>`).join("")}
+        <p class="muted" style="font-size:0.85rem">Use ideas from the reading and the primary sources, not just your answers here.</p>
+      </div>
+      <label for="claim" class="muted">Your answer</label>
+      <textarea class="claim" id="claim" placeholder="I agree more with...">${esc(ls.claim)}</textarea>
+      <div class="row"><button class="btn" id="ln-copy">Copy my answer</button></div>
+      <span class="toast" id="ln-toast" aria-live="polite"></span>
+    </section>`;
+  }
+  app.innerHTML = `
+    <header class="mast">
+      <span class="eyebrow">Lesson ${esc(l.id)} · ${esc(vs(l))}</span>
+      <h1 style="font-size:clamp(1.7rem,5vw,2.4rem)">${esc(l.title)}</h1>
+      <p>${esc(l.big)}</p>
+      <ol class="steps" aria-label="Steps">${steps.map((s, k) => `<li class="${k === step ? "on" : k < step ? "done" : ""}">${k + 1}. ${esc(s)}</li>`).join("")}</ol>
+    </header>
+    ${body}
+    <div class="nav">
+      <button class="btn ghost" id="ln-back">${step === 0 ? "All lessons" : "Back"}</button>
+      ${step < steps.length - 1 ? `<button class="btn" id="ln-next" ${canNext ? "" : "disabled"}>${name === "Questions" ? "See my result" : "Next"}</button>` : ""}
+    </div>
+    ${name === "Questions" && !allAnswered ? `<p class="muted" style="text-align:right">Answer all ${l.questions.length} questions to see your result.</p>` : ""}`;
+  const rerender = () => { save(); const y = window.scrollY; renderLesson(); window.scrollTo(0, y); };
+  app.querySelectorAll("[data-poll]").forEach(b => b.onclick = () => { ls.poll = +b.dataset.poll; rerender(); });
+  app.querySelectorAll("[data-q]").forEach(b => b.onclick = () => { ls.answers[b.dataset.q] = +b.dataset.k; rerender(); });
+  app.querySelectorAll("[data-ap]").forEach(b => b.onclick = () => { ls.apply[b.dataset.ap] = +b.dataset.k; rerender(); });
+  const claim = document.getElementById("claim");
+  if (claim) claim.oninput = () => { ls.claim = claim.value; save(); };
+  document.getElementById("ln-back").onclick = () => { if (step === 0) go("lessons"); else { ls.step = step - 1; go("lesson"); } };
+  const next = document.getElementById("ln-next");
+  if (next) next.onclick = () => { ls.step = step + 1; go("lesson"); };
+  const tl = document.getElementById("ln-timeline");
+  if (tl) tl.onclick = openTimeline;
+  const copy = document.getElementById("ln-copy");
+  if (copy) copy.onclick = () => {
+    const rows = lessonScore(l, ls);
+    const text = [`Lesson ${l.id}: ${l.title}`, ``,
+      `Warm-up: ${l.warmup.options[ls.poll]?.text || "(skipped)"}`,
+      `My result: ${rows.map(r => `${r.pct}% ${T[r.id].name}`).join(", ")}`, ``,
+      l.claim, ``, ls.claim || "(no answer yet)"].join("\n");
+    copyText(text, claim, "ln-toast", "Copied. Paste it into your assignment.");
+  };
+}
+
+/* ---------- Answer key and sources ---------- */
+function renderSources() {
+  const sel = new Set(state.selected);
+  const mine = finished();
+  app.innerHTML = `
+    <header class="mast">
+      <span class="eyebrow">Answer key and sources</span>
+      <h1>Where the answers come from</h1>
+      <p>Every match in this game is based on what the thinkers actually wrote. For each answer, you can see which thinkers hold that view and the passage where they say it. Links open the original text in a new tab.</p>
+    </header>
+    <div class="row"><button class="btn ghost" id="src-back">${backLabel()}</button></div>
+    <section class="sheet stack">
+      <h3>How to read the citations</h3>
+      <p class="muted" style="font-size:0.92rem"><strong>Strong</strong> means this answer is the thinker's clear position (2 points). <strong>Partial</strong> means they lean this way (1 point). A citation with a chapter, section, or quoted phrase points to the exact passage. "Read more" means the view runs through the whole work, so the link goes to the book itself. Older books are free online. A few modern books (Rawls, Nozick, Arendt, and most of Beauvoir) are still under copyright, so those links go to a trusted guide and you can find the book in a library.</p>
+      ${mine ? "" : `<p class="muted" style="font-size:0.92rem"><strong>Students:</strong> you may want to play first, so the key doesn't steer your answers.</p>`}
+    </section>
+    <section class="sheet">
+      ${DATA.questions.map((q, i) => `
+        <div class="key-q">
+          <span class="eyebrow">Question ${i + 1} · ${esc(q.area)}</span>
+          <h3>${esc(q.q)}</h3>
+          ${q.answers.map((a, k) => {
+            const who = [...a.strong.map(id => [id, "Strong"]), ...a.partial.map(id => [id, "Partial"])];
+            return `<div class="key-a">
+              <strong>${LETTERS[k]}. ${esc(a.text)}${mine && state.answers[i] === k ? ` <span class="tag">YOUR ANSWER</span>` : ""}</strong>
+              <ul>${who.length ? who.map(([id, kind]) => `<li style="${sel.has(id) ? "" : "opacity:0.7"}">${esc(T[id].name)} <span class="tag">${kind}</span>${cite(id, i)}</li>`).join("") : `<li class="muted">No thinker in this game holds this view.</li>`}</ul>
+            </div>`;
+          }).join("")}
+        </div>`).join("")}
+    </section>
+    <section class="stack">
+      <h2>Reading list</h2>
+      <div class="sheet stack">
+        ${DATA.thinkers.map(t => `<div class="stack" style="gap:6px"><h3>${esc(t.name)} <span class="muted" style="font:0.8rem var(--mono)">${esc(t.lived)}</span></h3>${readingList(t)}</div>`).join("")}
+      </div>
+    </section>
+    <div class="row"><button class="btn ghost" id="src-back2">${backLabel()}</button></div>`;
+  document.getElementById("src-back").onclick = goBack;
+  document.getElementById("src-back2").onclick = goBack;
+}
+
+window.addEventListener("hashchange", () => {
+  const l = parseLessonHash(); if (l) { state.lessonId = l; go("lesson"); return; }
+  const h = parseHash(); if (h) { state = fresh(); state.selected = h; state.locked = true; save(); render(); }
+});
+render();
+</script>
