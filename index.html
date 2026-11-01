@@ -7,34 +7,37 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@1,8..60,400&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: one narrow reading column, like a charter being drafted; setup, then one question per screen, then the analysis. */
+/* Layout: one narrow reading column, like a charter being drafted; setup, then one question per screen, then the analysis.
+   Colors and type follow the Dougalien Systems look (logo sand, slate and rust; Familjen Grotesk headings), as in the other Dougalien apps. */
 :root {
-  --bg: #eef0ec;
-  --paper: #fbfbf8;
-  --ink: #1b2230;
-  --muted: #5b6370;
-  --rule: #d3d7d0;
-  --accent: #1d5f5a;
-  --accent-soft: #d8e8e5;
-  --seal: #9a3b2c;
-  --bar: #9fb9b5;
-  --on-accent: #ffffff;
-  --display: "Libre Caslon Text", "Iowan Old Style", Georgia, serif;
+  --bg: #F4F4F1;
+  --paper: #FFFFFF;
+  --ink: #1B1E20;
+  --muted: #586770;
+  --rule: #D6DBDA;
+  --accent: #3E5C6B;
+  --accent-soft: #EFE8DA;
+  --seal: #B4532A;
+  --bar: #D6B27C;
+  --on-accent: #FFFFFF;
+  --sand: #D6B27C; --slate: #3E5C6B; --rust: #B4532A;
+  --display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --quote: "Source Serif 4", Georgia, "Times New Roman", serif;
   --body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #11161b; --paper: #182027; --ink: #e5e8e6; --muted: #9aa3ab; --rule: #2c3741;
-    --accent: #6cbcb3; --accent-soft: #1f3a3a; --seal: #e08a72; --bar: #3d6763; --on-accent: #0d1a19;
+    --bg: #14181A; --paper: #1C2225; --ink: #ECEAE5; --muted: #9DABB1; --rule: #2C3539;
+    --accent: #9CC0CF; --accent-soft: #263239; --seal: #E0825A; --bar: #8E7650; --on-accent: #0F1518;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #11161b; --paper: #182027; --ink: #e5e8e6; --muted: #9aa3ab; --rule: #2c3741;
-  --accent: #6cbcb3; --accent-soft: #1f3a3a; --seal: #e08a72; --bar: #3d6763; --on-accent: #0d1a19;
+  --bg: #14181A; --paper: #1C2225; --ink: #ECEAE5; --muted: #9DABB1; --rule: #2C3539;
+  --accent: #9CC0CF; --accent-soft: #263239; --seal: #E0825A; --bar: #8E7650; --on-accent: #0F1518;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -46,7 +49,8 @@ body {
   padding-block: 28px 64px;
 }
 main { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
-h1, h2, h3 { font-family: var(--display); font-weight: 400; text-wrap: balance; margin: 0; line-height: 1.2; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: -0.015em; text-wrap: balance; margin: 0; line-height: 1.15; }
+h1 { font-weight: 700; letter-spacing: -0.03em; }
 h1 { font-size: clamp(2.1rem, 6vw, 3rem); }
 h2 { font-size: 1.6rem; }
 h3 { font-size: 1.25rem; }
@@ -56,7 +60,8 @@ p { margin: 0; }
 .stack { display: flex; flex-direction: column; gap: 12px; }
 .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .sheet { background: var(--paper); border: 1px solid var(--rule); border-radius: 6px; padding: 24px; }
-header.mast { display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--rule); padding-bottom: 20px; }
+header.mast { display: flex; flex-direction: column; gap: 10px; padding-bottom: 22px; border-bottom: 5px solid transparent;
+  border-image: linear-gradient(90deg, var(--sand) 0 22%, var(--slate) 22% 34%, var(--sand) 34% 62%, var(--rust) 62% 70%, var(--sand) 70% 88%, var(--slate) 88% 100%) 1; }
 header.mast p { max-width: 60ch; color: var(--muted); }
 
 button { font: inherit; cursor: pointer; }
@@ -73,7 +78,7 @@ button { font: inherit; cursor: pointer; }
 .thinker { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; align-items: start; padding: 12px; border: 1px solid var(--rule); border-radius: 4px; background: var(--paper); cursor: pointer; }
 .thinker:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
 .thinker input { margin-top: 5px; accent-color: var(--accent); width: 16px; height: 16px; }
-.thinker strong { font-family: var(--display); font-weight: 400; font-size: 1.05rem; }
+.thinker strong { font-family: var(--display); font-weight: 600; font-size: 1.05rem; }
 .thinker .lived { grid-column: 2; font: 0.75rem/1.3 var(--mono); color: var(--muted); }
 .thinker .idea { grid-column: 2; font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
 .sharebox { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -96,8 +101,8 @@ button { font: inherit; cursor: pointer; }
 
 /* Results */
 .verdict { display: flex; flex-direction: column; gap: 8px; }
-.verdict .big { font-family: var(--display); font-size: clamp(2.2rem, 7vw, 3.4rem); line-height: 1.05; }
-.verdict .big em { color: var(--accent); font-style: italic; }
+.verdict .big { font-family: var(--display); font-weight: 700; letter-spacing: -0.03em; color: var(--ink); font-size: clamp(2.2rem, 7vw, 3.4rem); line-height: 1.05; }
+.verdict .big em { color: var(--accent); font-style: normal; }
 .bars { display: flex; flex-direction: column; gap: 6px; }
 .bar { display: grid; grid-template-columns: minmax(7rem, 12rem) 1fr 3.2rem; gap: 10px; align-items: center; font-size: 0.92rem; }
 .bar .track { height: 14px; background: var(--rule); border-radius: 2px; overflow: hidden; }
@@ -109,7 +114,7 @@ button { font: inherit; cursor: pointer; }
 .match:first-of-type { border-top: none; padding-top: 0; }
 .match .head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .match .head .pct { font: 500 1.1rem var(--mono); color: var(--accent); }
-blockquote { margin: 0; padding-left: 14px; border-left: 2px solid var(--seal); font-family: var(--display); font-style: italic; color: var(--ink); }
+blockquote { margin: 0; padding-left: 14px; border-left: 3px solid var(--seal); font-family: var(--quote); font-style: italic; color: var(--ink); }
 .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .pair > div { min-width: 0; }
 .pair h4 { margin: 0 0 6px; font: 500 0.75rem var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
@@ -117,7 +122,7 @@ blockquote { margin: 0; padding-left: 14px; border-left: 2px solid var(--seal); 
 .charter { display: flex; flex-direction: column; gap: 14px; }
 .article { display: grid; grid-template-columns: 6.5rem 1fr; gap: 12px; }
 .article .num { font: 500 0.75rem/1.9 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--seal); }
-.article ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-family: var(--display); }
+.article ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; font-family: var(--quote); }
 .article .star { color: var(--seal); font-family: var(--body); font-size: 0.8rem; }
 ol.discuss { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 10px; }
 .toast { font-size: 0.9rem; color: var(--accent); }
@@ -179,16 +184,18 @@ textarea.claim { width: 100%; min-height: 180px; font: 1rem/1.5 var(--body); pad
 }
 /* Branding */
 footer.brand { max-width: 760px; margin: 48px auto 0; padding-top: 16px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 0.82rem; color: var(--muted); }
-footer.brand .mark { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); }
-footer.brand .mark span { font: 500 0.78rem var(--mono); letter-spacing: 0.14em; text-transform: uppercase; }
-footer.brand svg { width: 22px; height: 22px; flex: none; }
+footer.brand { border-top: 2px solid var(--ink); font-family: var(--mono); font-size: 0.78rem; }
+footer.brand .mark { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; min-height: 44px; }
+footer.brand .mark span { font: 700 1rem var(--display); letter-spacing: -0.01em; }
+footer.brand .mark:hover span { color: var(--seal); }
+footer.brand svg { width: 28px; height: 28px; flex: none; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 
 <main id="app"></main>
 <footer class="brand">
-  <span class="mark"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="1" width="22" height="22" rx="4" fill="none" stroke="var(--accent)" stroke-width="1.5"/><text x="12" y="16" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="500" fill="var(--accent)">DS</text></svg><span>Dougalien Systems</span></span>
-  <span>The Perfect Society, a history machine for political philosophy</span>
+  <a class="mark" href="https://dougalien.com" target="_blank" rel="noopener" title="Visit dougalien.com"><svg viewBox="0 0 120 120" aria-hidden="true" focusable="false"><clipPath id="dgs-mk-foot"><path d="M22 10 H58 A50 50 0 0 1 58 110 H22 Z"/></clipPath><g clip-path="url(#dgs-mk-foot)"><rect x="0" y="0" width="62" height="30" fill="#D6B27C"/><rect x="0" y="30" width="62" height="22" fill="#3E5C6B"/><rect x="0" y="52" width="62" height="26" fill="#B4532A"/><rect x="0" y="78" width="62" height="18" fill="#D6B27C"/><rect x="0" y="96" width="62" height="24" fill="#3E5C6B"/><rect x="65" y="-12" width="55" height="30" fill="#D6B27C"/><rect x="65" y="18" width="55" height="22" fill="#3E5C6B"/><rect x="65" y="40" width="55" height="26" fill="#B4532A"/><rect x="65" y="66" width="55" height="18" fill="#D6B27C"/><rect x="65" y="84" width="55" height="24" fill="#3E5C6B"/><rect x="65" y="108" width="55" height="12" fill="#D6B27C"/></g></svg><span>Dougalien Systems</span></a>
+  <span>Educational Apps For Discovery · © 2026 Dougalien Systems</span>
 </footer>
 
 <script>
