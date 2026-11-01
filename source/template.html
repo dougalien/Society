@@ -1,4 +1,4 @@
-<title>The Perfect Society</title>
+<title>The Perfect Society | Dougalien Systems</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -172,10 +172,19 @@ textarea.claim { width: 100%; min-height: 180px; font: 1rem/1.5 var(--body); pad
   .bar { grid-template-columns: 6.5rem 1fr 3rem; font-size: 0.85rem; }
   .article { grid-template-columns: 1fr; gap: 4px; }
 }
+/* Branding */
+footer.brand { max-width: 760px; margin: 48px auto 0; padding-top: 16px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 0.82rem; color: var(--muted); }
+footer.brand .mark { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); }
+footer.brand .mark span { font: 500 0.78rem var(--mono); letter-spacing: 0.14em; text-transform: uppercase; }
+footer.brand svg { width: 22px; height: 22px; flex: none; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 
 <main id="app"></main>
+<footer class="brand">
+  <span class="mark"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="1" width="22" height="22" rx="4" fill="none" stroke="var(--accent)" stroke-width="1.5"/><text x="12" y="16" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="500" fill="var(--accent)">DS</text></svg><span>Dougalien Systems</span></span>
+  <span>The Perfect Society, a history machine for political philosophy</span>
+</footer>
 
 <script>
 const DATA = __DATA__;

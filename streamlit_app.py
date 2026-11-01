@@ -1,4 +1,4 @@
-"""The Perfect Society on Streamlit. The whole game is index.html; this file just shows it.
+"""The Perfect Society on Streamlit, by Dougalien Systems. The whole game is index.html; this file just shows it.
 
 Class links look like ...streamlit.app/?go=lesson-1.14 or ?go=set-hob-loc-rou.
 """
@@ -6,7 +6,7 @@ import json, pathlib, re
 import streamlit as st
 import streamlit.components.v1 as components
 
-st.set_page_config(page_title="The Perfect Society", page_icon="⚖️", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="The Perfect Society | Dougalien Systems", page_icon="⚖️", layout="wide", initial_sidebar_state="collapsed")
 st.markdown("<style>#MainMenu, header, footer {visibility: hidden;} .block-container {padding: 0 !important; max-width: 100% !important;}</style>", unsafe_allow_html=True)
 
 html = (pathlib.Path(__file__).parent / "index.html").read_text(encoding="utf-8")
