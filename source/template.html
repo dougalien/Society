@@ -136,6 +136,8 @@ blockquote .src { font-family: var(--body); font-style: normal; }
 .key-a .tag { font: 0.72rem var(--mono); color: var(--seal); }
 /* Timeline */
 .chartwrap { overflow-x: auto; }
+.swipe { display: none; margin: 6px 0 0; font-size: 0.82rem; color: var(--muted); }
+@media (max-width: 700px) { .swipe { display: block; } }
 .tl { display: flex; flex-direction: column; gap: 0; border-left: 2px solid var(--rule); margin-left: 6px; }
 .tl-item { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 4px 0 26px 22px; }
 .tl-item::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
@@ -190,7 +192,7 @@ footer.brand svg { width: 28px; height: 28px; flex: none; }
 <main id="app"></main>
 <footer class="brand">
   <a class="mark" href="https://dougalien.com" target="_blank" rel="noopener" title="Visit dougalien.com"><svg viewBox="0 0 120 120" aria-hidden="true" focusable="false"><clipPath id="dgs-mk-foot"><path d="M22 10 H58 A50 50 0 0 1 58 110 H22 Z"/></clipPath><g clip-path="url(#dgs-mk-foot)"><rect x="0" y="0" width="62" height="30" fill="#D6B27C"/><rect x="0" y="30" width="62" height="22" fill="#3E5C6B"/><rect x="0" y="52" width="62" height="26" fill="#B4532A"/><rect x="0" y="78" width="62" height="18" fill="#D6B27C"/><rect x="0" y="96" width="62" height="24" fill="#3E5C6B"/><rect x="65" y="-12" width="55" height="30" fill="#D6B27C"/><rect x="65" y="18" width="55" height="22" fill="#3E5C6B"/><rect x="65" y="40" width="55" height="26" fill="#B4532A"/><rect x="65" y="66" width="55" height="18" fill="#D6B27C"/><rect x="65" y="84" width="55" height="24" fill="#3E5C6B"/><rect x="65" y="108" width="55" height="12" fill="#D6B27C"/></g></svg><span>Dougalien Systems</span></a>
-  <span>Educational Apps For Discovery · © 2026 Dougalien Systems</span>
+  <span>The Perfect Society 0.1.0 · beta · Educational Apps For Discovery · © 2026 Dougalien Systems</span>
 </footer>
 
 <script>
@@ -326,7 +328,7 @@ function lifespanChart(pcts) {
     s += `<g opacity="${on ? 1 : 0.55}">`;
     s += `<text x="${AX.left - 10}" y="${y + 13}" text-anchor="end" font-size="12.5" fill="var(--ink)" font-weight="${isTop ? 700 : 400}">${esc(t.name)}</text>`;
     s += `<rect x="${x1}" y="${y + 3}" width="${Math.max(3, x2 - x1)}" height="13" rx="2" fill="${fill}"/>`;
-    if (pct) s += `<text x="${x2 + 6}" y="${y + 13}" font-size="11" font-family="IBM Plex Mono, monospace" fill="${isTop ? "var(--accent)" : "var(--muted)"}">${pct.trim()}</text>`;
+    if (pct) s += `<text x="${x2 + 6}" y="${y + 13}" font-size="11" font-family="IBM Plex Mono, monospace" fill="${isTop ? "var(--accent)" : "var(--muted)"}" stroke="var(--paper)" stroke-width="4" stroke-linejoin="round" paint-order="stroke">${pct.trim()}</text>`;
     s += `</g>`;
   });
   return s + `</svg>`;
@@ -344,7 +346,7 @@ function renderTimeline() {
     <div class="row"><button class="btn ghost" id="tl-back">${backLabel()}</button><button class="link" id="tl-sources">Answer key and sources</button></div>
     <section class="sheet stack">
       <h2>When they lived</h2>
-      <div class="chartwrap">${lifespanChart(pcts)}</div>
+      <div class="chartwrap">${lifespanChart(pcts)}</div><p class="swipe">Swipe sideways to see the whole chart.</p>
       <p class="muted" style="font-size:0.85rem">The gap between 300 BCE and 1300 CE is cut out to save space.${pcts ? " Your top three matches are highlighted, with your percentages." : ""} Faded names aren't in this round.</p>
     </section>
     ${DATA.eras.map(era => `
@@ -586,7 +588,7 @@ function renderResults() {
     <section class="sheet stack">
       <h2>Your matches through history</h2>
       <p class="muted">Your society borrows from thinkers who lived as much as ${Math.max(...top.map(r => T[r.id].died)) - Math.min(...top.map(r => T[r.id].born))} years apart.</p>
-      <div class="chartwrap">${lifespanChart(Object.fromEntries(rows.map(r => [r.id, r.pct])))}</div>
+      <div class="chartwrap">${lifespanChart(Object.fromEntries(rows.map(r => [r.id, r.pct])))}</div><p class="swipe">Swipe sideways to see the whole chart.</p>
       <div class="row"><button class="btn ghost" id="res-timeline">See what was happening in their world</button></div>
     </section>
 
