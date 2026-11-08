@@ -35,7 +35,7 @@ WORKS = {
     "politics": ("Politics", "c. 350 BCE", "https://web.mit.edu/classics/Aristotle/politics.html", "Free full text, Benjamin Jowett translation"),
     "ethics": ("Nicomachean Ethics", "c. 340 BCE", "https://classics.mit.edu/Aristotle/nicomachaen.html", "Free full text, W. D. Ross translation"),
     # Confucius
-    "analects": ("The Analects", "c. 400 BCE (compiled by his students)", "https://standardebooks.org/ebooks/confucius/analects/james-legge", "Free full text, James Legge translation. Passages are numbered book.passage"),
+    "analects": ("The Analects", "c. 400 BCE, compiled by his students", "https://standardebooks.org/ebooks/confucius/analects/james-legge", "Free full text, James Legge translation. Passages are numbered book.passage"),
     # Machiavelli
     "prince": ("The Prince", "1513", "https://www.marxists.org/reference/archive/machiavelli/works/prince/index.htm", "Free full text, W. K. Marriott translation"),
     "discourses": ("Discourses on Livy", "c. 1517", "https://gutenberg.org/files/10827/old/10827-h/10827-h.htm", "Free full text, Ninian Hill Thomson translation"),
@@ -58,8 +58,8 @@ WORKS = {
     "subjection": ("The Subjection of Women", "1869", "https://gutenberg.org/cache/epub/27083/pg27083-images.html", "Free full text"),
     # Douglass
     "narrative": ("Narrative of the Life of Frederick Douglass", "1845", "https://www.gutenberg.org/cache/epub/23/pg23-images.html", "Free full text"),
-    "fourth_july": ("What to the Slave Is the Fourth of July?", "1852 (speech, Rochester, New York)", "https://teachingamericanhistory.org/document/what-to-the-slave-is-the-fourth-of-july/", "Free full text"),
-    "self_made": ("Self-Made Men", "1872 (speech)", "https://teachingamericanhistory.org/library/document/self-made-men", "Free full text"),
+    "fourth_july": ("What to the Slave Is the Fourth of July?", "1852, speech, Rochester, New York", "https://teachingamericanhistory.org/document/what-to-the-slave-is-the-fourth-of-july/", "Free full text"),
+    "self_made": ("Self-Made Men", "1872, speech", "https://teachingamericanhistory.org/library/document/self-made-men", "Free full text"),
     "north_star": ("The North Star (his newspaper)", "1847", "https://en.wikipedia.org/wiki/The_North_Star_(anti-slavery_newspaper)", "About the paper and its motto"),
     # Marx
     "manifesto": ("The Communist Manifesto (with Friedrich Engels)", "1848", "https://www.marxists.org/archive/marx/works/1848/communist-manifesto/index.htm", "Free full text"),
@@ -68,13 +68,13 @@ WORKS = {
     "constructive": ("Constructive Programme", "1945", "https://www.mkgandhi.org/ebks/construct.pdf", "Free full text (PDF)"),
     # King
     "birmingham": ("Letter from Birmingham Jail", "1963", "https://billofrightsinstitute.org/activities/martin-luther-king-jr-letter-from-birmingham-jail-1963-pdj", "Free full text"),
-    "dream": ("I Have a Dream", "1963 (speech, Washington, D.C.)", "https://www.archives.gov/files/press/exhibits/dream-speech.pdf", "Free full text (PDF), National Archives"),
-    "where_go": ("Where Do We Go From Here?", "1967 (speech)", "https://wealthandwant.com/docs/King_Where.htm", "Free full text"),
+    "dream": ("I Have a Dream", "1963, speech, Washington, D.C.", "https://www.archives.gov/files/press/exhibits/dream-speech.pdf", "Free full text (PDF), National Archives"),
+    "where_go": ("Where Do We Go From Here?", "1967, speech", "https://wealthandwant.com/docs/King_Where.htm", "Free full text"),
     # Arendt
     "origins_tot": ("The Origins of Totalitarianism", "1951", "https://plato.stanford.edu/entries/arendt/", "Not free online. Look for it in a library. The link is the Stanford Encyclopedia of Philosophy guide"),
     "human_condition": ("The Human Condition", "1958", "https://plato.stanford.edu/entries/arendt/", "Not free online. Look for it in a library. The link is the Stanford Encyclopedia of Philosophy guide"),
     "on_revolution": ("On Revolution", "1963", "https://plato.stanford.edu/entries/arendt/", "Not free online. Look for it in a library. The link is the Stanford Encyclopedia of Philosophy guide"),
-    "thinking": ("Thinking and Moral Considerations", "1971 (essay)", "https://plato.stanford.edu/entries/arendt/", "Not free online. The link is the Stanford Encyclopedia of Philosophy guide"),
+    "thinking": ("Thinking and Moral Considerations", "1971, essay", "https://plato.stanford.edu/entries/arendt/", "Not free online. The link is the Stanford Encyclopedia of Philosophy guide"),
     # Beauvoir
     "second_sex": ("The Second Sex", "1949", "https://www.marxists.org/reference/subject/ethics/de-beauvoir/2nd-sex/introduction.htm", "Introduction free online. The full book is in libraries"),
     "ambiguity": ("The Ethics of Ambiguity", "1947", "https://www.marxists.org/reference/subject/ethics/de-beauvoir/ambiguity/index.htm", "Free full text"),

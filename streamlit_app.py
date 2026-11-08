@@ -10,7 +10,9 @@ import dougalien_brand as brand
 st.set_page_config(page_title="The Perfect Society • Dougalien Systems", page_icon=brand.page_icon("⚖️"), layout="wide", initial_sidebar_state="collapsed")
 brand.apply_branding()
 # The game fills the page under the branded header
-st.html("<style>.block-container {padding: 3.75rem 0 0 !important; max-width: 100% !important;} footer {visibility: hidden;}</style>")
+st.html("<style>.block-container {padding: 3.75rem 0 0 !important; max-width: 100% !important;} footer {visibility: hidden;}"
+        # The game box fills the window under the header, so the page itself doesn't scroll and there is one scroll bar
+        "iframe {height: calc(100vh - 4.5rem) !important; display: block;}</style>")
 
 html = (pathlib.Path(__file__).parent / "index.html").read_text(encoding="utf-8")
 go = st.query_params.get("go", "")
